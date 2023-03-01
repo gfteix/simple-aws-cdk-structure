@@ -15,7 +15,7 @@ export class SimpleStack extends Stack {
       functionName: 'simple-lambda',
       runtime: Runtime.NODEJS_18_X,
       timeout: Duration.seconds(30),
-      description: 'Simple lambda, triggered when queue has a new message, process the message and logs it'
+      description: 'Simple lambda, trigged when the queue has new records. Extracts and returns ids and messages from the records'
     })
  
     const simpleQueue = new Queue(this, 'simple-queue-id', {
@@ -24,7 +24,10 @@ export class SimpleStack extends Stack {
       retentionPeriod: Duration.hours(1)
     })
 
-    const eventSource = new SqsEventSource(simpleQueue)
+    const eventSource = new SqsEventSource(simpleQueue, {
+      batchSize: 5 //maximum number of records the lambda will process at once
+    })
+
     simpleLambda.addEventSource(eventSource);
   }
 }
