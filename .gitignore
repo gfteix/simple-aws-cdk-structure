@@ -1,0 +1,18 @@
+*.js
+!jest.config.js
+*.d.ts
+node_modules
+dist
+.npmrc
+.vscode
+!commitlint.config.js
+
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+.aws-sam
+template.yaml
+
+.env*
+
